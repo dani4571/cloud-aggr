@@ -12,3 +12,11 @@ database:
         <<: *db_defaults
     prod: 
         <<: *db_defaults
+
+keystone:
+    dev:
+        username: admin
+        password: b6a0e293f8f7797d36
+        tenant: admin
+        auth_urls:
+            - http://192.168.1.22:5000/v3

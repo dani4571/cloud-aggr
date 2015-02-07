@@ -1,15 +1,20 @@
 from bottle import request, route, view, get, post
+import services.test_service
 
 
 @route('/')
-@view('test/test')
+@view('test/login')
 def test():
-    return {"name": "John"}
+    return {}
 
 
 @route('/test')
-@view('test/test')
+@view('test/user_profile')
 def test():
+    tenant = request.forms.get('tenant')
+    username = request.forms.get('username')
+    password = request.forms.get('password')    
+    test_service.create_trust(username, password)
     return {"name": "John"}
 
 

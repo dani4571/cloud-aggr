@@ -1,0 +1,144 @@
+http POST http://192.168.1.22:5000/v3/OS-TRUST/trusts X-Auth-Token:d860dd5454b24e559e1063bc4d515f55 -b \
+        '{"trustee": "b152ee32feec41228ec50d27483133b8", \
+          "tenantId": "0458f8a8b01541dc97337fbf64cb88d7", \
+          "roles": "_member_", \
+          "endpoints": ["http://192.168.1.22:5000/v2.0", "http://192.168.1.22:9292"]}'
+
+
+http POST http://192.168.1.22:5000/v3/OS-TRUST/trusts X-Auth-Token:e7c427bdf01e4eb197bf62d4c73a68c8 trustee=b152ee32feec41228ec50d27483133b8 tenantId=0458f8a8b01541dc97337fbf64cb88d7 roles=_member_ endpoints:='["http://192.168.1.22:5000/v2.0", "http://192.168.1.22:9292"]'
+
+
+http POST http://192.168.1.22:5000/v3/OS-TRUST/trusts X-Auth-Token:d860dd5454b24e559e1063bc4d515f55 trustee=b152ee32feec41228ec50d27483133b8 tenantId=0458f8a8b01541dc97337fbf64cb88d7 roles=_member_ endpoints:='["http://192.168.1.22:5000/v2.0", "http://192.168.1.22:9292"]'
+
+
+
+---------------
+
+
+
+
+curl -H "X-Auth-Token: 21d36f40f1434f0bacedff4cebfc8d8a" 
+     -H "Content-Type: application/json" 
+     -X POST http://192.168.1.238:5000/v3/OS-TRUST/trusts 
+     -d '{
+            "trustee":"b152ee32feec41228ec50d27483133b8", 
+            "tenantId":"0458f8a8b01541dc97337fbf64cb88d7", 
+            "roles":"admin", 
+            "endpoints":["http://192.168.1.22:9292"]
+        }' | python -m json.tool
+
+
+
+
+
+
+
+
+        '{
+            "trust": {
+                "expires_at": "2024-02-27T18:30:59.999999Z",
+                "id": "2d2bef92c56142238142a50b451acc9c",
+                "impersonation": false,
+                "links": {
+                    "self": "http://keystone.url:5000/v3/trusts/2d2bef92c56142238142a50b451acc9c"
+                },
+                "project_id": "4cbc8f13acb246a29d2241bc4a25984f",
+                "roles": [
+                   {
+                     "id": "833ed2da437a49d198a90b224bd03cc3",
+                     "links": {
+                       "self": "http://keystone.url:5000/v3/roles/833ed2da437a49d198a90b224bd03cc3"
+                      },
+                    "name": "Member"
+                   }
+                ],
+                "roles_links": {
+                   "next": null,
+                   "previous": null,
+                   "self": "http://keystone.url:5000/trusts/2d2bef92c56142238142a50b451acc9c/roles"
+                },
+                "trustee_user_id": "d8f9f56949e745bf97c4157d67b3fb24",
+                "trustor_user_id": "3e49bcc788e342daa490cf842bbf421e"
+            }
+        }'
+
+
+
+root@infra1_utility_container-1dca5915:~# keystone user-list
+| 3e49bcc788e342daa490cf842bbf421e |  admin   |   True  |       |
+| 604b5f80272f4dc4b41c223a3b578feb |  cinder  |   True  |       |
+| f9428d8d42f946b9a5a50addba3cf304 | cinderv2 |   True  |       |
+| b152ee32feec41228ec50d27483133b8 | dan_test |   True  |       |
+| 1ba391ca0c6449f8bc4d123999e466e8 |   ec2    |   True  |       |
+| 0b7dc3d20b534f13b6c290f43c5cf5c2 |  glance  |   True  |       |
+| a8c9416ed6434c27b61b41f66b0b8fe4 |   heat   |   True  |       |
+| c8fae729e5ed49fabdba49e2ff830e3b | keystone |   True  |       |
+| 07cbc654049444dfab1e60a22914653e | neutron  |   True  |       |
+| f8d4fa6b29864c6fab2c0f424fbe8454 |   nova   |   True  |       |
+| 70219c8787014427aa980e3610108b55 |  novav3  |   True  |       |
+| df31a2c807154e758902b2dd53ba0f07 |    s3    |   True  |       |
+
+root@infra1_utility_container-1dca5915:~# keystone role-list
+| 9fe2ff9ee4384b1894a90878d3e92bab |     _member_     |
+| e8f55a2e78cd46a8be225167e861419d |      admin       |
+| 3a8968e16b444ee4b1c78455b37e57a2 | heat_stack_owner |
+| 2b9b7d1e62e941bda52d574c91db605f | heat_stack_user  |
+
+root@infra1_utility_container-1dca5915:~# keystone tenant-list
+| 55ea6c2098394d788b871c55608a5f5a |    admin    |   True  |
+| 30b4e66f91414a7bac93ab46f803c988 |   service   |   True  |
+| 0458f8a8b01541dc97337fbf64cb88d7 | test_tenant |   True  |
+
+
+
+
+curl -i -H "Content-type: application/json" \
+     -d '{
+            "auth" : { 
+                "identity" : { 
+                    "methods" : [ "token" ],
+                    "token" : { "id" : "" } 
+                }, 
+                "scope" : {
+                    "OS-TRUST:trust" : { 
+                        "id" : "2d2bef92c56142238142a50b451acc9c" 
+                    }
+                } 
+            } 
+        }'  http://keystone.url:35357/v3/auth/tokens
+
+
+
+
+
+curl \
+    -H "X-Auth-Token: 21d36f40f1434f0bacedff4cebfc8d8a" \
+    -H "Content-type: application/json" \
+    -d '{ 
+            "trust": { 
+                "expires_at": "2024-02-27T18:30:59.999999Z", 
+                "impersonation": true, 
+                "project_id": "55ea6c2098394d788b871c55608a5f5a", 
+                "roles": [ 
+                            { "name": "admin" } 
+                         ], 
+                "trustee_user_id": "b152ee32feec41228ec50d27483133b8", 
+                "trustor_user_id": "3e49bcc788e342daa490cf842bbf421e"
+            }
+        }' http://192.168.1.238:35357/v3/OS-TRUST/trusts
+
+
+http GET http://192.168.1.238:5000/v3/OS-TRUST/trusts X-Auth-Token:dbe4859a75304ca18c43c7e6cc17049c
+
+
+
+
+
+
+
+
+
+
+
+
+
