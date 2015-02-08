@@ -1,8 +1,10 @@
+from globals import *
 from keystoneclient.v3 import client
 
 
-def create_trust(trustor_name, trustor_pass, trustor_tenant, aggr_creds):
-    auth_urls = keystone_config['auth_urls']
+def create_trust(trustor_name, trustor_pass, trustor_tenant):
+    aggr_creds = globals.config['keystone']
+    auth_urls = aggr_creds['auth_urls']
     trustor_keystones = []
     for url in auth_urls:
         keystone = client.Client(username=trustor_name, 

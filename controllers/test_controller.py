@@ -1,4 +1,3 @@
-from globals import *
 from bottle import request, route, view, get, post
 from services import test_service
 
@@ -15,7 +14,7 @@ def test():
     tenant = request.forms.get('tenant')
     username = request.forms.get('username')
     password = request.forms.get('password')    
-    test_service.create_trust(username, password, tenant, config['keystone'])
+    test_service.create_trust(username, password, tenant)
     return {"name": "John"}
 
 
