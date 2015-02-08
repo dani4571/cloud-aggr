@@ -1,3 +1,4 @@
+from globals import *
 from bottle import request, route, view, get, post
 from services import test_service
 
