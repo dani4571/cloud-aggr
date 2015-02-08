@@ -8,7 +8,7 @@ def test():
     return {}
 
 
-@route('/test')
+@post('/test')
 @view('test/user_profile')
 def test():
     tenant = request.forms.get('tenant')
