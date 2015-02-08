@@ -3,7 +3,7 @@ from keystoneclient.v3 import client
 
 
 def create_trust(trustor_name, trustor_pass, trustor_tenant):
-    aggr_creds = globals.config['keystone']
+    aggr_creds = config['keystone']
     auth_urls = aggr_creds['auth_urls']
     trustor_keystones = []
     for url in auth_urls:
