@@ -2,9 +2,9 @@
 <body>
     <h2>OpenStack Info</h2>
     <ul>
-    {foreach from=$myArray item=foo}
-        <li>{$foo}</li>
-    {/foreach}
+    %for item in thing:
+        <li>{{item}}</li>
+    %end
     </ul>
 </body>
 </html>

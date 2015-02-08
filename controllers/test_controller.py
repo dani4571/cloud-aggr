@@ -8,14 +8,14 @@ def test():
     return {}
 
 
-@post('/test')
+@route('/test', method='POST')
 @view('test/user_profile')
 def test():
     tenant = request.forms.get('tenant')
     username = request.forms.get('username')
     password = request.forms.get('password')    
     test_service.create_trust(username, password, tenant)
-    return {"name": "John"}
+    return {'thing': ['dan1', 'dan2', 'dan3']}
 
 
 @get('/auth')
