@@ -14,7 +14,7 @@ def test():
     tenant = request.forms.get('tenant')
     username = request.forms.get('username')
     password = request.forms.get('password')    
-    test_service.create_trust(username, password)
+    test_service.create_trust(username, password, tenant)
     return {"name": "John"}
 
 
