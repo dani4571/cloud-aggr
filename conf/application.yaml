@@ -15,8 +15,9 @@ database:
 
 keystone:
     dev:
-        username: admin
-        password: b6a0e293f8f7797d36
-        tenant: admin
+        username: robot
+        password: ostackdemo
+        tenant: robot_tenant
+        role: robot
         auth_urls:
             - http://192.168.1.22:5000/v3
