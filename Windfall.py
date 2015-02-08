@@ -65,7 +65,7 @@ if __name__ == '__main__':
     bottle.debug(True)
     app = bottle.app()
     myapp = StripPathMiddleware(app)
-    bottle.run(app=myapp, host='localhost', port='8090', server='gevent')
+    bottle.run(app=myapp, host='0.0.0.0', port='8090', server='gevent')
 else:
     #===============================================================================
     # Mod WSGI launch
