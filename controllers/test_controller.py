@@ -1,5 +1,5 @@
 from bottle import request, route, view, get, post
-import services.test_service
+from services import test_service
 
 
 @route('/')
