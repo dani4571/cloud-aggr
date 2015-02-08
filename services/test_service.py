@@ -13,5 +13,6 @@ def create_trust(trustor_name, trustor_pass, trustor_tenant):
                                  auth_url=url)
         trustor_keystones.append(keystone)
 
-    trustor_keystones[0].project.list()
+    print dir(trustor_keystones[0])
+    
     #keystone.project.list()
